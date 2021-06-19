@@ -12,5 +12,29 @@ namespace Tower_defense
         private double radij;
         private int moc;
         private Point lokacija;
+
+        public Stolp(double radij, int moc, Point lokacija)
+        {
+            this.radij = radij;
+            this.moc = moc;
+            this.lokacija = lokacija;
+        }
+
+        public double Radij
+        {
+            get { return this.radij; }
+        }
+
+        public int Moc
+        {
+            get { return this.moc; }
+        }
+
+        public Point Lokacija
+        {
+            get { return this.lokacija; }
+        }
+
+
     }
 }

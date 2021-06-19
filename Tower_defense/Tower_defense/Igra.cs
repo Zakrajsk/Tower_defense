@@ -25,6 +25,7 @@ namespace Tower_defense
         private Size vel_razmik_st_ikona = new Size(2, 2);
 
         private Napadalec[] zivi_napadalci = new Napadalec[100];
+        private List<Stolp> postavljeni_stolpi = new List<Stolp>();
 
         private List<Point> testno_polje = new List<Point>();
 
@@ -34,41 +35,111 @@ namespace Tower_defense
         private Image[] slike_topov = new Image[3];
         private Image slika_napake = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\napaka.png");
 
+        private Point kje_miska = new Point(0, 0);
+
         public Igra()
         {
             InitializeComponent();
             this.slike_topov[0] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
             this.slike_topov[1] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
             this.slike_topov[2] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
+
+            this.testno_polje.Add(new Point(2, 0));
+            this.testno_polje.Add(new Point(2, 1));
+            this.testno_polje.Add(new Point(2, 2));
+            this.testno_polje.Add(new Point(3, 2));
+            this.testno_polje.Add(new Point(3, 3));
+            this.testno_polje.Add(new Point(3, 4));
+            this.testno_polje.Add(new Point(3, 5));
+            this.testno_polje.Add(new Point(3, 6));
+            this.testno_polje.Add(new Point(3, 7));
+            this.testno_polje.Add(new Point(3, 8));
+            this.testno_polje.Add(new Point(4, 8));
+            this.testno_polje.Add(new Point(4, 8));
+            this.testno_polje.Add(new Point(5, 8));
+            this.testno_polje.Add(new Point(6, 8));
+            this.testno_polje.Add(new Point(6, 9));
+            this.testno_polje.Add(new Point(6, 10));
+            this.testno_polje.Add(new Point(7, 10));
+            this.testno_polje.Add(new Point(7, 11));
+            this.testno_polje.Add(new Point(7, 12));
+            this.testno_polje.Add(new Point(7, 13));
+            this.testno_polje.Add(new Point(8, 13));
+            this.testno_polje.Add(new Point(8, 14));
+            this.testno_polje.Add(new Point(8, 15));
+
+
+            this.postavljeni_stolpi.Add(new Stolp(3, 3, new Point(7, 4)));
+            this.postavljeni_stolpi.Add(new Stolp(4, 4, new Point(9, 3)));
+
             IzrisiKomponente();
         }
 
-        public void NapolniMrezo(Graphics g)
+        public void IzrisiMrezo(Graphics g)
         {
             int st_vrstic = 12;
             int st_stolpcev = 16;
 
-            Pen risalo = new Pen(Color.Black);
-
-            this.testno_polje.Add(new Point(3, 3));
-            this.testno_polje.Add(new Point(3, 4));
+            Pen pen_crno = new Pen(Color.Black);
+            pen_crno.Width = 2;
 
             for (int i = 0; i < st_vrstic; i++)
             {
                 for (int j = 0; j < st_stolpcev; j++)
                 {
-                    if (this.testno_polje.Contains(new Point(i, j))){
-                        continue;
-                    }
-                    else //narisemo kvadrat
+                    int x = this.vel_mreze.Width * j;
+                    int y = this.vel_mreze.Height * i;
+                    if (this.testno_polje.Contains(new Point(i, j)))
                     {
-                        int x = this.vel_mreze.Width * j;
-                        int y = this.vel_mreze.Height * i;
-                        g.DrawRectangle(risalo, this.vel_mreze.Width, this.vel_mreze.Height, x, y);
+                        g.FillRectangle(new SolidBrush(Color.SandyBrown), x, y, this.vel_mreze.Width - 1, this.vel_mreze.Height - 1);
+                    }
+                    else
+                    {
+                        g.DrawRectangle(pen_crno, x, y, this.vel_mreze.Width, this.vel_mreze.Height);
+                        g.FillRectangle(new SolidBrush(Color.LightGreen), x, y, this.vel_mreze.Width - 1, this.vel_mreze.Height - 1);
                     }
 
                 }
             }
+        }
+
+        public void IzrisiStolpe(Graphics g)
+        {
+            foreach(Stolp posamezni in this.postavljeni_stolpi)
+            {
+                int x = posamezni.Lokacija.X * this.vel_mreze.Width;
+                int y = posamezni.Lokacija.Y * this.vel_mreze.Height;
+                g.DrawImage(this.slike_topov[0], x, y, this.vel_mreze.Width, this.vel_mreze.Height);
+            }
+        }
+
+        public void IzrisiNapadalce(Graphics g)
+        {
+            foreach(Napadalec posamezni in this.zivi_napadalci)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Izrise izbrani top kjer ima uporabnik misko
+        /// Poleg njega tudi izriše območje, do katerega ima top doseg
+        /// </summary>
+        /// <param name="g"></param>
+        public void IzrisiIzbranTop(Graphics g)
+        {
+            int x = kje_miska.X * this.vel_mreze.Width;
+            int y = kje_miska.Y * this.vel_mreze.Height;
+            lbl_test.Text = "" + x + " "+ y;
+
+            g.DrawImage(this.slike_topov[0], x, y, this.vel_mreze.Width, this.vel_mreze.Height);
+
+            Pen rob_obmocja = new Pen(Color.Black);
+            SolidBrush celo_obmocje = new SolidBrush(Color.FromArgb(128, 0, 255, 0));
+
+            g.DrawEllipse(rob_obmocja, x - 50 + this.vel_mreze.Width / 2, y - 50 + this.vel_mreze.Height / 2, 100, 100);
+            g.FillEllipse(celo_obmocje, x - 50 + this.vel_mreze.Width / 2, y - 50 + this.vel_mreze.Height / 2, 100, 100);
+
         }
 
         public void NapolniMeni()
@@ -108,7 +179,7 @@ namespace Tower_defense
             Button izbran = (Button)sender;
 
             this.izbran_top = int.Parse(izbran.Name.Split("_")[2]); //ime gumba btn_meni_{stevilka}
-            Frame();
+            lbl_test.Text = this.izbran_top.ToString();
         }
 
         public void IzrisiKomponente()
@@ -117,8 +188,8 @@ namespace Tower_defense
             int sirina = this.ClientSize.Width;
             int visina = this.ClientSize.Height;
 
-            pnl_igralna_plosca.Location = new Point(this.vel_robovi.Width, this.vel_robovi.Height);
-            pnl_igralna_plosca.Size = this.vel_plosce;
+            picbox_igralna_plosca.Location = new Point(this.vel_robovi.Width, this.vel_robovi.Height);
+            picbox_igralna_plosca.Size = this.vel_plosce;
 
             pnl_izbirni_meni.Location = new Point(2 * this.vel_robovi.Width + this.vel_plosce.Width,
                                                   2 * this.vel_robovi.Height + this.vel_ikon.Height);
@@ -153,6 +224,7 @@ namespace Tower_defense
             lbl_zivljenja.Font = pisava;
 
             NapolniMeni();
+            Frame();
 
         }
 
@@ -178,7 +250,7 @@ namespace Tower_defense
             }
 
             this.vel_robovi = new Size((int)(sprememba_sirine * 0.0125), (int)(sprememba_visine * 0.02));
-            this.vel_plosce = new Size((int)(sprememba_sirine * 0.8), (int)(sprememba_visine * 0.96));
+            this.vel_plosce = new Size((int)(sprememba_sirine * 0.80), (int)(sprememba_visine * 0.96));
             this.vel_menija = new Size((int)(sprememba_sirine * 0.1625), (int)(sprememba_visine * 0.52));
             this.vel_meni_robovi = new Size((int)(this.vel_menija.Width * 0.06), (int)(this.vel_menija.Width * 0.06));
             this.vel_meni_gumbi = new Size((int)(this.vel_menija.Width * 0.41), (int)(this.vel_menija.Width * 0.41));
@@ -196,12 +268,19 @@ namespace Tower_defense
         /// </summary>
         private void Frame()
         {
-            Bitmap igralna_plosca = new Bitmap(1024, 768);
+            
+            Bitmap igralna_plosca = new Bitmap(this.vel_plosce.Width, this.vel_plosce.Height);
             Graphics g = Graphics.FromImage(igralna_plosca);
 
-            NapolniMrezo(g);
+            IzrisiMrezo(g);
+            IzrisiStolpe(g);
 
-            pnl_igralna_plosca.BackgroundImage = igralna_plosca;
+            if (this.izbran_top != -1) //uporabnik ima izbran top za postavitev
+            {
+                IzrisiIzbranTop(g);
+            }
+
+            picbox_igralna_plosca.Image = igralna_plosca;
         }
 
 
@@ -209,27 +288,43 @@ namespace Tower_defense
         private void TestPrikaza(object sender, EventArgs e)
         {
             PictureBox izbran = (PictureBox)sender;
-            test_label.Text = izbran.Location.ToString();
+            picbox_igralna_plosca.Text = izbran.Location.ToString();
 
             //Najdemo sredisce
             int poz_x = izbran.Location.X + (this.vel_mreze.Height / 2);
             int poz_y = izbran.Location.Y + (this.vel_mreze.Width / 2);
-            this.g = pnl_igralna_plosca.CreateGraphics();
-            Pen rob_obmocja = new Pen(Color.Black);
-            SolidBrush celo_obmocje = new SolidBrush(Color.FromArgb(128, 0, 255, 0));
-
-            g.DrawEllipse(rob_obmocja, poz_x - 50, poz_y - 50, 100, 100);
-            g.FillEllipse(celo_obmocje, poz_x - 50, poz_y - 50, 100, 100);
+            this.g = picbox_igralna_plosca.CreateGraphics();
+            
 
             g.DrawImage(slike_topov[0], new Point(300, 300));
 
         }
 
-        private void TestPrikazaOdmik(object sender, EventArgs e)
+        private void PremikPoPlosci(object sender, MouseEventArgs e)
         {
-            test_label.Text = "DOL";
-            this.g.Clear(pnl_igralna_plosca.BackColor);
-            
+
+            //najdemo v katerem kvadrantu je miska
+            Point poz_miske =new Point(e.X / this.vel_mreze.Width, e.Y / this.vel_mreze.Height);
+
+            if(poz_miske != this.kje_miska) //premaknili smo se v drug kvadrant na igralnem polju
+            {
+                kje_miska = poz_miske;
+                Frame();
+            }
+            else //se vedno smo na istem kvadrantu
+            {
+
+            }
+        }
+
+        private void PritisnjenaTipka(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == '\x1b') //Pritisnjena esc tipka
+            {
+                this.izbran_top = -1; //ponastavimo izbran top
+                Frame();
+
+            }
         }
     }
 }

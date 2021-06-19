@@ -33,16 +33,17 @@ namespace Tower_defense
             this.Casovnik = new System.Windows.Forms.Timer(this.components);
             this.pnl_izbirni_meni = new System.Windows.Forms.Panel();
             this.pnl_lastnosti_izbranega = new System.Windows.Forms.Panel();
-            this.test_label = new System.Windows.Forms.Label();
-            this.pnl_igralna_plosca = new System.Windows.Forms.Panel();
+            this.lbl_test = new System.Windows.Forms.Label();
             this.btn_nova_runda = new System.Windows.Forms.Button();
             this.lbl_zivljenja = new System.Windows.Forms.Label();
             this.picbox_zivljenje = new System.Windows.Forms.PictureBox();
             this.picbox_denar = new System.Windows.Forms.PictureBox();
             this.lbl_denar = new System.Windows.Forms.Label();
-            this.pnl_igralna_plosca.SuspendLayout();
+            this.picbox_igralna_plosca = new System.Windows.Forms.PictureBox();
+            this.pnl_lastnosti_izbranega.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_zivljenje)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbox_igralna_plosca)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_izbirni_meni
@@ -56,29 +57,20 @@ namespace Tower_defense
             // pnl_lastnosti_izbranega
             // 
             this.pnl_lastnosti_izbranega.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.pnl_lastnosti_izbranega.Controls.Add(this.lbl_test);
             this.pnl_lastnosti_izbranega.Location = new System.Drawing.Point(1056, 512);
             this.pnl_lastnosti_izbranega.Name = "pnl_lastnosti_izbranega";
             this.pnl_lastnosti_izbranega.Size = new System.Drawing.Size(208, 160);
             this.pnl_lastnosti_izbranega.TabIndex = 4;
             // 
-            // test_label
+            // lbl_test
             // 
-            this.test_label.AutoSize = true;
-            this.test_label.Location = new System.Drawing.Point(754, 63);
-            this.test_label.Name = "test_label";
-            this.test_label.Size = new System.Drawing.Size(91, 20);
-            this.test_label.TabIndex = 4;
-            this.test_label.Text = "Za testiranje";
-            // 
-            // pnl_igralna_plosca
-            // 
-            this.pnl_igralna_plosca.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pnl_igralna_plosca.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pnl_igralna_plosca.Controls.Add(this.test_label);
-            this.pnl_igralna_plosca.Location = new System.Drawing.Point(16, 16);
-            this.pnl_igralna_plosca.Name = "pnl_igralna_plosca";
-            this.pnl_igralna_plosca.Size = new System.Drawing.Size(1024, 768);
-            this.pnl_igralna_plosca.TabIndex = 0;
+            this.lbl_test.AutoSize = true;
+            this.lbl_test.Location = new System.Drawing.Point(16, 16);
+            this.lbl_test.Name = "lbl_test";
+            this.lbl_test.Size = new System.Drawing.Size(33, 20);
+            this.lbl_test.TabIndex = 0;
+            this.lbl_test.Text = "test";
             // 
             // btn_nova_runda
             // 
@@ -127,10 +119,21 @@ namespace Tower_defense
             this.lbl_denar.TabIndex = 9;
             this.lbl_denar.Text = "999";
             // 
+            // picbox_igralna_plosca
+            // 
+            this.picbox_igralna_plosca.BackColor = System.Drawing.Color.SandyBrown;
+            this.picbox_igralna_plosca.Location = new System.Drawing.Point(16, 16);
+            this.picbox_igralna_plosca.Name = "picbox_igralna_plosca";
+            this.picbox_igralna_plosca.Size = new System.Drawing.Size(1024, 768);
+            this.picbox_igralna_plosca.TabIndex = 10;
+            this.picbox_igralna_plosca.TabStop = false;
+            this.picbox_igralna_plosca.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PremikPoPlosci);
+            // 
             // Igra
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1280, 800);
+            this.Controls.Add(this.picbox_igralna_plosca);
             this.Controls.Add(this.lbl_denar);
             this.Controls.Add(this.picbox_denar);
             this.Controls.Add(this.picbox_zivljenje);
@@ -138,13 +141,15 @@ namespace Tower_defense
             this.Controls.Add(this.btn_nova_runda);
             this.Controls.Add(this.pnl_lastnosti_izbranega);
             this.Controls.Add(this.pnl_izbirni_meni);
-            this.Controls.Add(this.pnl_igralna_plosca);
+            this.KeyPreview = true;
             this.Name = "Igra";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PritisnjenaTipka);
             this.Resize += new System.EventHandler(this.ResizeOkna);
-            this.pnl_igralna_plosca.ResumeLayout(false);
-            this.pnl_igralna_plosca.PerformLayout();
+            this.pnl_lastnosti_izbranega.ResumeLayout(false);
+            this.pnl_lastnosti_izbranega.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_zivljenje)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbox_igralna_plosca)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -154,12 +159,12 @@ namespace Tower_defense
         private System.Windows.Forms.Timer Casovnik;
         private System.Windows.Forms.Panel pnl_izbirni_meni;
         private System.Windows.Forms.Panel pnl_lastnosti_izbranega;
-        private System.Windows.Forms.Label test_label;
-        private System.Windows.Forms.Panel pnl_igralna_plosca;
         private System.Windows.Forms.Button btn_nova_runda;
         private System.Windows.Forms.Label lbl_zivljenja;
         private System.Windows.Forms.PictureBox picbox_zivljenje;
         private System.Windows.Forms.PictureBox picbox_denar;
         private System.Windows.Forms.Label lbl_denar;
+        private System.Windows.Forms.PictureBox picbox_igralna_plosca;
+        private System.Windows.Forms.Label lbl_test;
     }
 }
