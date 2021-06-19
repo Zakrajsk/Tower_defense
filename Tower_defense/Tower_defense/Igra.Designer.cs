@@ -30,7 +30,7 @@ namespace Tower_defense
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.Casovnik = new System.Windows.Forms.Timer(this.components);
+            this.casovnik = new System.Windows.Forms.Timer(this.components);
             this.pnl_izbirni_meni = new System.Windows.Forms.Panel();
             this.pnl_lastnosti_izbranega = new System.Windows.Forms.Panel();
             this.lbl_test = new System.Windows.Forms.Label();
@@ -40,11 +40,18 @@ namespace Tower_defense
             this.picbox_denar = new System.Windows.Forms.PictureBox();
             this.lbl_denar = new System.Windows.Forms.Label();
             this.picbox_igralna_plosca = new System.Windows.Forms.PictureBox();
+            this.picbox_napadalci = new System.Windows.Forms.PictureBox();
             this.pnl_lastnosti_izbranega.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_zivljenje)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_igralna_plosca)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbox_napadalci)).BeginInit();
             this.SuspendLayout();
+            // 
+            // casovnik
+            // 
+            this.casovnik.Interval = 10;
+            this.casovnik.Tick += new System.EventHandler(this.CasovnaEnota);
             // 
             // pnl_izbirni_meni
             // 
@@ -80,6 +87,7 @@ namespace Tower_defense
             this.btn_nova_runda.TabIndex = 5;
             this.btn_nova_runda.Text = "Start";
             this.btn_nova_runda.UseVisualStyleBackColor = true;
+            this.btn_nova_runda.Click += new System.EventHandler(this.ZacetekNoveRunde);
             // 
             // lbl_zivljenja
             // 
@@ -129,10 +137,22 @@ namespace Tower_defense
             this.picbox_igralna_plosca.TabStop = false;
             this.picbox_igralna_plosca.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PremikPoPlosci);
             // 
+            // picbox_napadalci
+            // 
+            this.picbox_napadalci.BackColor = System.Drawing.Color.Transparent;
+            this.picbox_napadalci.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.picbox_napadalci.Location = new System.Drawing.Point(16, 16);
+            this.picbox_napadalci.Name = "picbox_napadalci";
+            this.picbox_napadalci.Size = new System.Drawing.Size(1024, 768);
+            this.picbox_napadalci.TabIndex = 11;
+            this.picbox_napadalci.TabStop = false;
+            this.picbox_napadalci.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PremikPoPlosci);
+            // 
             // Igra
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1280, 800);
+            this.Controls.Add(this.picbox_napadalci);
             this.Controls.Add(this.picbox_igralna_plosca);
             this.Controls.Add(this.lbl_denar);
             this.Controls.Add(this.picbox_denar);
@@ -141,6 +161,7 @@ namespace Tower_defense
             this.Controls.Add(this.btn_nova_runda);
             this.Controls.Add(this.pnl_lastnosti_izbranega);
             this.Controls.Add(this.pnl_izbirni_meni);
+            this.DoubleBuffered = true;
             this.KeyPreview = true;
             this.Name = "Igra";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PritisnjenaTipka);
@@ -150,13 +171,14 @@ namespace Tower_defense
             ((System.ComponentModel.ISupportInitialize)(this.picbox_zivljenje)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_igralna_plosca)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbox_napadalci)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Timer Casovnik;
+        private System.Windows.Forms.Timer casovnik;
         private System.Windows.Forms.Panel pnl_izbirni_meni;
         private System.Windows.Forms.Panel pnl_lastnosti_izbranega;
         private System.Windows.Forms.Button btn_nova_runda;
@@ -166,5 +188,6 @@ namespace Tower_defense
         private System.Windows.Forms.Label lbl_denar;
         private System.Windows.Forms.PictureBox picbox_igralna_plosca;
         private System.Windows.Forms.Label lbl_test;
+        private System.Windows.Forms.PictureBox picbox_napadalci;
     }
 }

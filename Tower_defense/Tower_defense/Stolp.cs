@@ -17,7 +17,7 @@ namespace Tower_defense
         {
             this.radij = radij;
             this.moc = moc;
-            this.lokacija = lokacija;
+            this.lokacija = lokacija; //glede na kvadrant
         }
 
         public double Radij

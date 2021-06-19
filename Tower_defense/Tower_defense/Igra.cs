@@ -24,12 +24,10 @@ namespace Tower_defense
         private Size vel_ikon = new Size(48, 48);
         private Size vel_razmik_st_ikona = new Size(2, 2);
 
-        private Napadalec[] zivi_napadalci = new Napadalec[100];
+        private List<Napadalec> zivi_napadalci = new List<Napadalec>();
         private List<Stolp> postavljeni_stolpi = new List<Stolp>();
 
         private List<Point> testno_polje = new List<Point>();
-
-        private Graphics g;
 
         private int izbran_top = -1;  //Spremenljivka za izbiro topa ce je -1 ni izbran noben drugače pa top z to stevilko
         private Image[] slike_topov = new Image[3];
@@ -71,6 +69,10 @@ namespace Tower_defense
 
             this.postavljeni_stolpi.Add(new Stolp(3, 3, new Point(7, 4)));
             this.postavljeni_stolpi.Add(new Stolp(4, 4, new Point(9, 3)));
+
+            this.zivi_napadalci.Add(new Napadalec(2, 5, new Point(0, 2 * 64)));
+
+            picbox_igralna_plosca.Controls.Add(picbox_napadalci); //Zato, da je drugi picturebox transparenten
 
             IzrisiKomponente();
         }
@@ -115,9 +117,12 @@ namespace Tower_defense
 
         public void IzrisiNapadalce(Graphics g)
         {
+            
             foreach(Napadalec posamezni in this.zivi_napadalci)
             {
-
+                int x = posamezni.Lokacija.X;
+                int y = posamezni.Lokacija.Y;
+                g.FillEllipse(new SolidBrush(Color.Black), x, y, 20, 20);
             }
         }
 
@@ -184,12 +189,11 @@ namespace Tower_defense
 
         public void IzrisiKomponente()
         {
-
-            int sirina = this.ClientSize.Width;
-            int visina = this.ClientSize.Height;
-
             picbox_igralna_plosca.Location = new Point(this.vel_robovi.Width, this.vel_robovi.Height);
             picbox_igralna_plosca.Size = this.vel_plosce;
+
+            picbox_napadalci.Location = new Point(this.vel_robovi.Width, this.vel_robovi.Height);
+            picbox_napadalci.Size = this.vel_plosce;
 
             pnl_izbirni_meni.Location = new Point(2 * this.vel_robovi.Width + this.vel_plosce.Width,
                                                   2 * this.vel_robovi.Height + this.vel_ikon.Height);
@@ -224,8 +228,6 @@ namespace Tower_defense
             lbl_zivljenja.Font = pisava;
 
             NapolniMeni();
-            Frame();
-
         }
 
         /// <summary>
@@ -259,16 +261,17 @@ namespace Tower_defense
             this.vel_ikon = new Size((int)(sprememba_visine * 0.06), (int)(sprememba_visine * 0.06));
             this.vel_nova_runda_gumba = new Size((int)(sprememba_sirine * 0.1625), (int)(sprememba_visine * 0.12));
             this.vel_stevilk = new Size((int)(this.vel_menija.Width * 0.24), (int)(sprememba_visine * 0.04));
-
             IzrisiKomponente();
+            OsvezitevGrafike();
+
         }
 
         /// <summary>
-        /// Vsak casovni tik poklice vse funkcije za izris stvari na igralno povrsino
+        /// Izrise celotno igralno povrsino in vse stolpe, ki so postavljeni
         /// </summary>
-        private void Frame()
+        private void OsvezitevGrafike()
         {
-            
+
             Bitmap igralna_plosca = new Bitmap(this.vel_plosce.Width, this.vel_plosce.Height);
             Graphics g = Graphics.FromImage(igralna_plosca);
 
@@ -281,35 +284,34 @@ namespace Tower_defense
             }
 
             picbox_igralna_plosca.Image = igralna_plosca;
+            g.Dispose();
         }
 
 
-
-        private void TestPrikaza(object sender, EventArgs e)
+        /// <summary>
+        /// Premakne vse napadlce in izvede vse izstrelke stolpov
+        /// Zgodi se vsak tick v casovniku
+        /// </summary>
+        private void Frame()
         {
-            PictureBox izbran = (PictureBox)sender;
-            picbox_igralna_plosca.Text = izbran.Location.ToString();
+            Bitmap napadalci = new Bitmap(this.vel_plosce.Width, this.vel_plosce.Height);
+            Graphics n = Graphics.FromImage(napadalci);
+            IzrisiNapadalce(n);
 
-            //Najdemo sredisce
-            int poz_x = izbran.Location.X + (this.vel_mreze.Height / 2);
-            int poz_y = izbran.Location.Y + (this.vel_mreze.Width / 2);
-            this.g = picbox_igralna_plosca.CreateGraphics();
-            
-
-            g.DrawImage(slike_topov[0], new Point(300, 300));
-
+            picbox_napadalci.Image = napadalci;
+            n.Dispose();
         }
+
 
         private void PremikPoPlosci(object sender, MouseEventArgs e)
         {
-
             //najdemo v katerem kvadrantu je miska
             Point poz_miske =new Point(e.X / this.vel_mreze.Width, e.Y / this.vel_mreze.Height);
 
             if(poz_miske != this.kje_miska) //premaknili smo se v drug kvadrant na igralnem polju
             {
                 kje_miska = poz_miske;
-                Frame();
+                OsvezitevGrafike();
             }
             else //se vedno smo na istem kvadrantu
             {
@@ -322,9 +324,20 @@ namespace Tower_defense
             if(e.KeyChar == '\x1b') //Pritisnjena esc tipka
             {
                 this.izbran_top = -1; //ponastavimo izbran top
-                Frame();
-
+                OsvezitevGrafike();
             }
+        }
+
+        private void ZacetekNoveRunde(object sender, EventArgs e)
+        {
+            casovnik.Enabled = !casovnik.Enabled;
+        }
+
+        private void CasovnaEnota(object sender, EventArgs e)
+        {
+            this.zivi_napadalci[0].premik('V');
+            lbl_test.Text = this.zivi_napadalci[0].Lokacija.ToString();
+            Frame();
         }
     }
 }
