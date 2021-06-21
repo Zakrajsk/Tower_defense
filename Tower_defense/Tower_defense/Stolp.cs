@@ -15,8 +15,8 @@ namespace Tower_defense
 
         public Stolp(double radij, int moc, Point lokacija)
         {
-            this.radij = radij;
-            this.moc = moc;
+            this.radij = radij; //Kaksen obseg ima top podan je polmer v pixlih
+            this.moc = moc; //Koliko zivljenj izbije ob izstrelku
             this.lokacija = lokacija; //glede na kvadrant
         }
 

@@ -50,7 +50,7 @@ namespace Tower_defense
             // 
             // casovnik
             // 
-            this.casovnik.Interval = 10;
+            this.casovnik.Interval = 1;
             this.casovnik.Tick += new System.EventHandler(this.CasovnaEnota);
             // 
             // pnl_izbirni_meni
@@ -135,17 +135,19 @@ namespace Tower_defense
             this.picbox_igralna_plosca.Size = new System.Drawing.Size(1024, 768);
             this.picbox_igralna_plosca.TabIndex = 10;
             this.picbox_igralna_plosca.TabStop = false;
+            this.picbox_igralna_plosca.Paint += new System.Windows.Forms.PaintEventHandler(this.NarisiStaticneObjekte);
             this.picbox_igralna_plosca.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PremikPoPlosci);
             // 
             // picbox_napadalci
             // 
             this.picbox_napadalci.BackColor = System.Drawing.Color.Transparent;
             this.picbox_napadalci.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.picbox_napadalci.Location = new System.Drawing.Point(16, 16);
+            this.picbox_napadalci.Location = new System.Drawing.Point(0, 0);
             this.picbox_napadalci.Name = "picbox_napadalci";
             this.picbox_napadalci.Size = new System.Drawing.Size(1024, 768);
             this.picbox_napadalci.TabIndex = 11;
             this.picbox_napadalci.TabStop = false;
+            this.picbox_napadalci.Paint += new System.Windows.Forms.PaintEventHandler(this.NarisiDinamicneObjekte);
             this.picbox_napadalci.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PremikPoPlosci);
             // 
             // Igra
