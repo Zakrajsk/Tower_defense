@@ -51,6 +51,11 @@ namespace Tower_defense
             }
         }
 
+        public void Ustreljen(int moc)
+        {
+            this.zivljenje -= moc;
+        }
+
         /// <summary>
         /// Prmekane nasprotnika z njegovo hitrostjo v smer, ki je podana z crko smeri neba
         /// S-gor V-desno J-dol Z-levo 

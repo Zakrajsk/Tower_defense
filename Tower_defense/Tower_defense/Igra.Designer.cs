@@ -50,7 +50,7 @@ namespace Tower_defense
             // 
             // casovnik
             // 
-            this.casovnik.Interval = 1;
+            this.casovnik.Interval = 5;
             this.casovnik.Tick += new System.EventHandler(this.CasovnaEnota);
             // 
             // pnl_izbirni_meni
@@ -97,7 +97,7 @@ namespace Tower_defense
             this.lbl_zivljenja.Name = "lbl_zivljenja";
             this.lbl_zivljenja.Size = new System.Drawing.Size(50, 32);
             this.lbl_zivljenja.TabIndex = 6;
-            this.lbl_zivljenja.Text = "999";
+            this.lbl_zivljenja.Text = "NO";
             // 
             // picbox_zivljenje
             // 
@@ -125,7 +125,7 @@ namespace Tower_defense
             this.lbl_denar.Name = "lbl_denar";
             this.lbl_denar.Size = new System.Drawing.Size(50, 32);
             this.lbl_denar.TabIndex = 9;
-            this.lbl_denar.Text = "999";
+            this.lbl_denar.Text = "NO";
             // 
             // picbox_igralna_plosca
             // 

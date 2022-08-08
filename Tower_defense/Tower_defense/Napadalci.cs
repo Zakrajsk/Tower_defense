@@ -16,10 +16,10 @@ namespace Tower_defense
 
         public Napadalci()
         {
-            this.vsi_napadalci.Add(new Napadalec(5, 2, new Point(0, 2 * 64 + 32), new Point(1, 0)));
-            this.vsi_napadalci.Add(new Napadalec(3, 5, new Point(-50, 2 * 64 + 32), new Point(1, 0)));
-            this.vsi_napadalci.Add(new Napadalec(4, 3, new Point(-100, 2 * 64 + 32), new Point(1, 0)));
-            this.vsi_napadalci.Add(new Napadalec(8, 1, new Point(-150, 2 * 64 + 32), new Point(1, 0)));
+            this.vsi_napadalci.Add(new Napadalec(40, 2, new Point(0, 2 * 64 + 32), new Point(1, 0)));
+            //this.vsi_napadalci.Add(new Napadalec(3, 5, new Point(-50, 2 * 64 + 32), new Point(1, 0)));
+            //this.vsi_napadalci.Add(new Napadalec(4, 3, new Point(-100, 2 * 64 + 32), new Point(1, 0)));
+            //this.vsi_napadalci.Add(new Napadalec(8, 1, new Point(-150, 2 * 64 + 32), new Point(1, 0)));
         }
 
         public List<Napadalec> VsiNapadalci
@@ -31,8 +31,13 @@ namespace Tower_defense
         /// Premakne vse napadalce za hitrost v smer
         /// Če more napadalec spremeniti smer poskrbi tudi za to
         /// </summary>
-        public void PremakniVse(List<Point> pot, Size vel_mreze)
+        /// <param name="pot"></param>
+        /// <param name="vel_mreze"></param>
+        /// <returns>vrne koliko zivljenj je treba odsteti, saj so prisli napadalci na konec</returns>
+        public int PremakniVse(List<Point> pot, Size vel_mreze)
         {
+            int izgubljenih_zivljenj = 0;
+
             foreach(Napadalec posamezni in vsi_napadalci)
             {
                 //Ko pride v sredino kvadranta
@@ -50,14 +55,25 @@ namespace Tower_defense
                         //Ga poravnamo na sredino za kaksen piksel se premakne
                         posamezni.Lokacija = new Point(koordinata.X * vel_mreze.Width + vel_mreze.Width / 2, koordinata.Y * vel_mreze.Height + vel_mreze.Height / 2);
                         Point kje_je = pot[indeks];
-                        Point kam_mora = pot[indeks + 1];
-                        posamezni.SmerPremika = kam_mora - (Size)kje_je;
+                        if(indeks < pot.Count - 1) //Preverimo ce smo ze na koncu
+                        {
+                            Point kam_mora = pot[indeks + 1];
+                            posamezni.SmerPremika = kam_mora - (Size)kje_je;
+                        }
+                        else
+                        {
+                            //napadalec je na koncu, zato ga odstranimo in odstejemo zivljenja
+                            izgubljenih_zivljenj += posamezni.Zivljenje;
+
+                            //TODO Odstrani napadalca
+                        }
+
                     }
                 }
-
-                
                 posamezni.Premik();
             }
+
+            return izgubljenih_zivljenj;
         }
     }
 }

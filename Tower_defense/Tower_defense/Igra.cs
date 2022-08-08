@@ -25,7 +25,8 @@ namespace Tower_defense
         private Size vel_razmik_st_ikona = new Size(2, 2);
 
         private Napadalci napadalci= new Napadalci();
-        private List<Stolp> postavljeni_stolpi = new List<Stolp>();
+        private Stolpi stolpi = new Stolpi();
+        private List<List<Point>> izstrelki = new List<List<Point>>();
 
         private List<Point> testno_polje = new List<Point>();
 
@@ -34,6 +35,9 @@ namespace Tower_defense
         private Image slika_napake = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\napaka.png");
 
         private Point kje_miska = new Point(0, 0);
+
+        private int st_zivljenj = 100;
+        private int st_kovancev = 100;
 
         public Igra()
         {
@@ -74,15 +78,43 @@ namespace Tower_defense
             this.testno_polje.Add(new Point(13, 4));
             this.testno_polje.Add(new Point(14, 4));
             this.testno_polje.Add(new Point(15, 4));
-
-
-            this.postavljeni_stolpi.Add(new Stolp(3, 3, new Point(7, 4)));
-            this.postavljeni_stolpi.Add(new Stolp(4, 4, new Point(9, 3)));
+            this.testno_polje.Add(new Point(16, 4));
 
             picbox_igralna_plosca.Controls.Add(picbox_napadalci); //Zato, da je drugi picturebox transparenten
 
             IzrisiKomponente();
+            PosodobiZivljenjaKovance();
         }
+
+        public int StZivljenj
+        {
+            get { return this.st_zivljenj; }
+        }
+
+        public int StKovancev
+        {
+            get { return this.st_kovancev; }
+
+        }
+
+        /// <summary>
+        /// Ko napadalec pride do konca igralec zgubi zivljenja
+        /// </summary>
+        /// <param name="koliko"></param>
+        public void IzgubljenaZivljenja(int koliko)
+        {
+            this.st_zivljenj -= koliko;
+        }
+
+        /// <summary>
+        /// Metoda posodobi zivljenja in kovance pri graficnem izrisu
+        /// </summary>
+        public void PosodobiZivljenjaKovance()
+        {
+            lbl_zivljenja.Text = this.StZivljenj.ToString();
+            lbl_denar.Text = this.StKovancev.ToString();
+        }
+
 
         public void IzrisiMrezo(Graphics g)
         {
@@ -119,7 +151,7 @@ namespace Tower_defense
         /// <param name="g"></param>
         public void IzrisiStolpe(Graphics g)
         {
-            foreach(Stolp posamezni in this.postavljeni_stolpi)
+            foreach(Stolp posamezni in stolpi.VsiStolpi)
             {
                 int x = posamezni.Lokacija.X * this.vel_mreze.Width;
                 int y = posamezni.Lokacija.Y * this.vel_mreze.Height;
@@ -136,9 +168,22 @@ namespace Tower_defense
             
             foreach(Napadalec posamezni in napadalci.VsiNapadalci)
             {
-                int x = posamezni.Lokacija.X;
-                int y = posamezni.Lokacija.Y;
                 g.FillPolygon(new SolidBrush(Color.Black), posamezni.TockeZaIzris(this.vel_mreze));
+            }
+        }
+
+        /// <summary>
+        /// Izrise vse izstrelke v tem casu
+        /// </summary>
+        /// <param name="g"></param>
+        public void IzrisiIzstrelke(Graphics g)
+        {
+            Pen pen_rdece = new Pen(Color.Red);
+            pen_rdece.Width = 5;
+
+            foreach (List<Point> posamezn in this.izstrelki)
+            {
+                g.DrawLine(pen_rdece, posamezn[0], posamezn[1]);
             }
         }
 
@@ -306,7 +351,7 @@ namespace Tower_defense
 
             if(poz_miske != this.kje_miska) //premaknili smo se v drug kvadrant na igralnem polju
             {
-                kje_miska = poz_miske;
+                this.kje_miska = poz_miske;
                 picbox_igralna_plosca.Invalidate();
             }
             else //se vedno smo na istem kvadrantu
@@ -341,7 +386,11 @@ namespace Tower_defense
         /// <param name="e"></param>
         private void CasovnaEnota(object sender, EventArgs e)
         {
-            this.napadalci.PremakniVse(this.testno_polje, this.vel_mreze);
+            int izgubljena_zivljenja = this.napadalci.PremakniVse(this.testno_polje, this.vel_mreze);
+            this.IzgubljenaZivljenja(izgubljena_zivljenja);
+            this.PosodobiZivljenjaKovance();
+
+            this.izstrelki = this.stolpi.IzstreliVse(this.napadalci.VsiNapadalci, this.vel_mreze);
             picbox_napadalci.Invalidate();
 
         }
@@ -356,6 +405,10 @@ namespace Tower_defense
         {
             lbl_test.Text = this.napadalci.VsiNapadalci[0].Lokacija.ToString();
             IzrisiNapadalce(e.Graphics);
+            if(this.izstrelki.Count() != 0)
+            {
+                IzrisiIzstrelke(e.Graphics);
+            }
         }
 
         /// <summary>

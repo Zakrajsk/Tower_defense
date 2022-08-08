@@ -1,0 +1,95 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
+
+namespace Tower_defense
+{
+    class Stolpi
+    {
+        private List<Stolp> vsi_stolpi = new List<Stolp>();
+
+        public Stolpi()
+        {
+            this.vsi_stolpi.Add(new Stolp(300, 0, 20, new Point(7, 4)));
+            //this.vsi_stolpi.Add(new Stolp(400, 4, 10, new Point(9, 3)));
+        }
+
+        public List<Stolp> VsiStolpi
+        {
+            get { return this.vsi_stolpi; }
+        }
+
+        /// <summary>
+        /// Evklidska razdalja
+        /// </summary>
+        /// <param name="prva">prva tocka</param>
+        /// <param name="druga">druga tocka</param>
+        /// <returns></returns>
+        public static double Evklidska(Point prva, Point druga)
+        {
+            double x = Math.Pow((prva.X - druga.X), 2);
+            double y = Math.Pow((prva.Y - druga.Y), 2);
+            return Math.Sqrt(x + y);
+        }
+
+        public List<List<Point>> IzstreliVse(List<Napadalec> vsi_napadalci, Size vel_mreze)
+        {
+
+            List<List<Point>> izstelki_za_izris = new List<List<Point>>();
+
+            foreach(Stolp posamezni in this.VsiStolpi)
+            {
+                // Za vsak stolp pogledamo kateri napadalci so v bližini in najdemo najbližjega! Zaenkrat potem pa še druge opcije
+
+                //Naprej ali sploh lahko strelja v tem koraku
+                if (posamezni.AliLahkoStrelja())
+                {
+                    //Top je pripravljen na streljanje, zato iscemo najblizjo tarco
+                    Napadalec najblizji_napadalec = null;
+                    double najblizja_razdalja = posamezni.Radij;
+
+                    //Izracun lokacije stolpa, ker je podan v mrezi in ne v pikslih
+                    Point realna_lokacija = new Point(posamezni.Lokacija.X * vel_mreze.Width + vel_mreze.Width / 2,
+                                                      posamezni.Lokacija.Y * vel_mreze.Height + vel_mreze.Height / 2);
+
+                    foreach (Napadalec en in vsi_napadalci)
+                    {
+                        
+                        double medsebojna_razd = Evklidska(realna_lokacija, en.Lokacija);
+
+                        if(medsebojna_razd < najblizja_razdalja)
+                        {
+                            //Nasli smo napadalca, ki je se blizje
+                            najblizji_napadalec = en;
+                            najblizja_razdalja = medsebojna_razd;
+                        }
+                    }
+
+                    if(najblizji_napadalec!= null && najblizja_razdalja <= posamezni.Radij)
+                    {
+                        //imamo napadalca, ki ga lahko ustrelimo
+                        posamezni.Izstelitev();
+                        najblizji_napadalec.Ustreljen(posamezni.Moc);
+                        List<Point> strel = new List<Point>();
+                        strel.Add(realna_lokacija);
+                        strel.Add(najblizji_napadalec.Lokacija);
+                        izstelki_za_izris.Add(strel);
+                    }
+                }
+                else
+                {
+                    //Top se ne more streljati, zato se samo pripravlja
+                    posamezni.SePripravlja();
+                }
+                
+            }
+
+            return izstelki_za_izris;
+        }
+    }
+
+    
+}
