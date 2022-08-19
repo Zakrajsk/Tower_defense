@@ -78,14 +78,39 @@ namespace Tower_defense
             int x_sredina = this.lokacija.X;
             int y_sredina = this.lokacija.Y;
 
-            int kot = 360 / this.zivljenje;
-
-            for(int i = 0; i < this.zivljenje; i++)
+            if (this.zivljenje == 1)
             {
-                tocke[i] = new PointF(x_sredina + (float)(vel_mreze.Width * 0.3) * (float)Math.Cos(i * kot * Math.PI / 180),
-                                     y_sredina + (float)(vel_mreze.Height * 0.3) * (float)Math.Sin(i * kot * Math.PI / 180));
+                PointF[] nad_tocke = new PointF[10];
+                for (int i = 0; i < 10; i++)
+                {
+                    nad_tocke[i] = new PointF(x_sredina + (float)(vel_mreze.Width * 0.1) * (float)Math.Cos(i * 36 * Math.PI / 180),
+                                         y_sredina + (float)(vel_mreze.Height * 0.1) * (float)Math.Sin(i * 36 * Math.PI / 180));
+                }
+                tocke = nad_tocke;
             }
 
+            else if (this.zivljenje == 2)
+            {
+                PointF[] nad_tocke = new PointF[4];
+                for (int i = 0; i < 4; i++)
+                {
+                    nad_tocke[i] = new PointF(x_sredina + (float)(vel_mreze.Width * 0.3) * (float)Math.Cos((45 + i * 90) * Math.PI / 180),
+                                         y_sredina + (float)(vel_mreze.Height * 0.1) * (float)Math.Sin((45 + i * 90) * Math.PI / 180));
+                }
+                tocke = nad_tocke;
+            }
+
+            else
+            {
+                int kot = 360 / this.zivljenje;
+
+                for (int i = 0; i < this.zivljenje; i++)
+                {
+                    tocke[i] = new PointF(x_sredina + (float)(vel_mreze.Width * 0.3) * (float)Math.Cos(i * kot * Math.PI / 180),
+                                         y_sredina + (float)(vel_mreze.Height * 0.3) * (float)Math.Sin(i * kot * Math.PI / 180));
+                }
+            }
+            
             return tocke;
         }
     }

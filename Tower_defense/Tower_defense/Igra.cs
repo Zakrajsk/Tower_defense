@@ -47,8 +47,8 @@ namespace Tower_defense
             this.slike_topov[1] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\top_0.png");
             //this.slike_topov[2] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
 
-            this.izbira_topov[0] = new Stolp(0, 100, 2, 50, new Point(0, 0), 10);
-            this.izbira_topov[1] = new Stolp(1, 300, 2, 100, new Point(0, 0), 30);
+            this.izbira_topov[0] = new Stolp(0, 100, 1, 50, new Point(0, 0), 10);
+            this.izbira_topov[1] = new Stolp(1, 300, 1, 100, new Point(0, 0), 30);
 
             this.testno_polje.Add(new Point(0, 2));
             this.testno_polje.Add(new Point(1, 2));
@@ -229,11 +229,19 @@ namespace Tower_defense
                 Button button = new Button();
                 button.Name = "btn_meni_" + i;
                 button.Size = this.vel_meni_gumbi;
+                button.BackColor = Color.LightGray;
                 button.BackgroundImageLayout = ImageLayout.Stretch;
                 button.BackgroundImage = this.slike_topov[i];
                 button.Left = sirina;
                 button.Top = visina;
                 button.Click += IzbiraVMeniju;
+
+                if (this.st_kovancev < this.izbira_topov[i].Cena) //Trenutno topa ne moremo kupiti
+                {
+                    button.Enabled = false;
+                    button.BackColor = Color.OrangeRed;
+                }
+
                 pnl_izbirni_meni.Controls.Add(button);
 
                 //Premaknemo sirini in visino na lokacijo kjer bo naslednji gumb
@@ -438,7 +446,11 @@ namespace Tower_defense
             {
                 lbl_test.Text = this.kje_miska.ToString();
                 stolpi.PostavitevNovega(this.kje_miska, this.izbira_topov[this.izbran_top], this.izbran_top);
+                this.st_kovancev -= this.izbira_topov[this.izbran_top].Cena;
+                this.izbran_top = -1;
                 picbox_igralna_plosca.Invalidate();
+                this.PosodobiZivljenjaKovance();
+                this.NapolniMeni();
             }
         }
     }

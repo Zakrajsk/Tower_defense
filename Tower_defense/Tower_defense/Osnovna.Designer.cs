@@ -34,9 +34,9 @@ namespace Tower_defense
             // 
             // btn_zacni
             // 
-            this.btn_zacni.Location = new System.Drawing.Point(66, 355);
+            this.btn_zacni.Location = new System.Drawing.Point(293, 44);
             this.btn_zacni.Name = "btn_zacni";
-            this.btn_zacni.Size = new System.Drawing.Size(94, 29);
+            this.btn_zacni.Size = new System.Drawing.Size(214, 96);
             this.btn_zacni.TabIndex = 0;
             this.btn_zacni.Text = "Začni";
             this.btn_zacni.UseVisualStyleBackColor = true;
@@ -48,6 +48,7 @@ namespace Tower_defense
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btn_zacni);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Osnovna";
             this.Text = "Tower defense";
             this.ResumeLayout(false);
