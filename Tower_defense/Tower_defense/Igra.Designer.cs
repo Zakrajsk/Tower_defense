@@ -142,11 +142,12 @@ namespace Tower_defense
             // 
             this.picbox_napadalci.BackColor = System.Drawing.Color.Transparent;
             this.picbox_napadalci.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.picbox_napadalci.Location = new System.Drawing.Point(0, 0);
+            this.picbox_napadalci.Location = new System.Drawing.Point(0, 2);
             this.picbox_napadalci.Name = "picbox_napadalci";
             this.picbox_napadalci.Size = new System.Drawing.Size(1024, 768);
             this.picbox_napadalci.TabIndex = 11;
             this.picbox_napadalci.TabStop = false;
+            this.picbox_napadalci.Click += new System.EventHandler(this.ClickNaPlosco);
             this.picbox_napadalci.Paint += new System.Windows.Forms.PaintEventHandler(this.NarisiDinamicneObjekte);
             this.picbox_napadalci.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PremikPoPlosci);
             // 

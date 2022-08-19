@@ -13,13 +13,20 @@ namespace Tower_defense
 
         public Stolpi()
         {
-            this.vsi_stolpi.Add(new Stolp(300, 0, 20, new Point(7, 4)));
-            //this.vsi_stolpi.Add(new Stolp(400, 4, 10, new Point(9, 3)));
+            this.vsi_stolpi.Add(new Stolp(0, 300, 2, 50, new Point(7, 4), 10));
+            //this.vsi_stolpi.Add(new Stolp(400, 4, 80, new Point(9, 3)));
         }
 
         public List<Stolp> VsiStolpi
         {
             get { return this.vsi_stolpi; }
+        }
+
+        public void PostavitevNovega(Point lokacija, Stolp izbran, int tip)
+        {
+            // Nastavimo nov stolp ki ima se lokacijo
+            Stolp postavljen = new Stolp(tip, izbran.Radij, izbran.Moc, izbran.Hitrost, lokacija, izbran.Cena);
+            this.vsi_stolpi.Add(postavljen);
         }
 
         /// <summary>

@@ -9,24 +9,32 @@ namespace Tower_defense
 {
     class Stolp
     {
+        private int tip; //Tip bo dolocal kaksne vrste je top 0 - osnoven 1 - ostrostrelski
         private double radij;
         private int moc;
         private int hitrost;
         private Point lokacija;
+        private int cena;
 
         private int pripravljen; //Ko bo pripravlej na 0 takrat lahko top strelja
 
-        public Stolp(double radij, int moc, int hitrost, Point lokacija)
+        public Stolp(int tip, double radij, int moc, int hitrost, Point lokacija, int cena)
         {
+            this.tip = tip;
             this.radij = radij; //Kaksen obseg ima top podan je polmer v pixlih
             this.moc = moc; //Koliko zivljenj izbije ob izstrelku
             this.lokacija = lokacija; //glede na kvadrant
             this.hitrost = hitrost;
+            this.cena = cena;
 
             pripravljen = hitrost;
 
         }
 
+        public int Tip
+        {
+            get { return this.tip; }
+        }
         public double Radij
         {
             get { return this.radij; }
@@ -44,6 +52,11 @@ namespace Tower_defense
         public Point Lokacija
         {
             get { return this.lokacija; }
+        }
+
+        public int Cena
+        {
+            get { return this.cena; }
         }
 
         /// <summary>

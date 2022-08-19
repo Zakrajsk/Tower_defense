@@ -31,7 +31,8 @@ namespace Tower_defense
         private List<Point> testno_polje = new List<Point>();
 
         private int izbran_top = -1;  //Spremenljivka za izbiro topa ce je -1 ni izbran noben drugače pa top z to stevilko
-        private Image[] slike_topov = new Image[3];
+        private Stolp[] izbira_topov = new Stolp[2];
+        private Image[] slike_topov = new Image[2];
         private Image slika_napake = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\napaka.png");
 
         private Point kje_miska = new Point(0, 0);
@@ -44,7 +45,10 @@ namespace Tower_defense
             InitializeComponent();
             this.slike_topov[0] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
             this.slike_topov[1] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\top_0.png");
-            this.slike_topov[2] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
+            //this.slike_topov[2] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
+
+            this.izbira_topov[0] = new Stolp(0, 100, 2, 50, new Point(0, 0), 10);
+            this.izbira_topov[1] = new Stolp(1, 300, 2, 100, new Point(0, 0), 30);
 
             this.testno_polje.Add(new Point(0, 2));
             this.testno_polje.Add(new Point(1, 2));
@@ -155,7 +159,7 @@ namespace Tower_defense
             {
                 int x = posamezni.Lokacija.X * this.vel_mreze.Width;
                 int y = posamezni.Lokacija.Y * this.vel_mreze.Height;
-                g.DrawImage(this.slike_topov[0], x, y, this.vel_mreze.Width, this.vel_mreze.Height);
+                g.DrawImage(this.slike_topov[posamezni.Tip], x, y, this.vel_mreze.Width, this.vel_mreze.Height);
             }
         }
 
@@ -203,8 +207,9 @@ namespace Tower_defense
             Pen rob_obmocja = new Pen(Color.Black);
             SolidBrush celo_obmocje = new SolidBrush(Color.FromArgb(128, 0, 255, 0));
 
-            g.DrawEllipse(rob_obmocja, x - 50 + this.vel_mreze.Width / 2, y - 50 + this.vel_mreze.Height / 2, 100, 100);
-            g.FillEllipse(celo_obmocje, x - 50 + this.vel_mreze.Width / 2, y - 50 + this.vel_mreze.Height / 2, 100, 100);
+            int radij = (int)this.izbira_topov[this.izbran_top].Radij;
+            g.DrawEllipse(rob_obmocja, x - (radij / 2) + this.vel_mreze.Width / 2, y - (radij / 2) + this.vel_mreze.Height / 2, radij, radij);
+            g.FillEllipse(celo_obmocje, x - (radij / 2) + this.vel_mreze.Width / 2, y - (radij / 2) + this.vel_mreze.Height / 2, radij, radij);
 
         }
 
@@ -405,10 +410,8 @@ namespace Tower_defense
         {
             lbl_test.Text = this.napadalci.VsiNapadalci[0].Lokacija.ToString();
             IzrisiNapadalce(e.Graphics);
-            if(this.izstrelki.Count() != 0)
-            {
-                IzrisiIzstrelke(e.Graphics);
-            }
+            IzrisiIzstrelke(e.Graphics);
+            
         }
 
         /// <summary>
@@ -426,6 +429,16 @@ namespace Tower_defense
             if (this.izbran_top != -1) //uporabnik ima izbran top za postavitev
             {
                 IzrisiIzbranTop(e.Graphics);
+            }
+        }
+
+        private void ClickNaPlosco(object sender, EventArgs e)
+        {
+            if (this.izbran_top != -1) //Uporabnik zeli postaviti top na polje
+            {
+                lbl_test.Text = this.kje_miska.ToString();
+                stolpi.PostavitevNovega(this.kje_miska, this.izbira_topov[this.izbran_top], this.izbran_top);
+                picbox_igralna_plosca.Invalidate();
             }
         }
     }
