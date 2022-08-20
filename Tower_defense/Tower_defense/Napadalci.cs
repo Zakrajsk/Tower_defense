@@ -17,9 +17,9 @@ namespace Tower_defense
         public Napadalci()
         {
             this.vsi_napadalci.Add(new Napadalec(4, 2, new Point(0, 2 * 64 + 32), new Point(1, 0)));
-            //this.vsi_napadalci.Add(new Napadalec(30, 5, new Point(-50, 2 * 64 + 32), new Point(1, 0)));
-            //this.vsi_napadalci.Add(new Napadalec(40, 3, new Point(-100, 2 * 64 + 32), new Point(1, 0)));
-            //this.vsi_napadalci.Add(new Napadalec(80, 1, new Point(-150, 2 * 64 + 32), new Point(1, 0)));
+            this.vsi_napadalci.Add(new Napadalec(30, 1, new Point(-50, 2 * 64 + 32), new Point(1, 0)));
+            this.vsi_napadalci.Add(new Napadalec(40, 3, new Point(-100, 2 * 64 + 32), new Point(1, 0)));
+            this.vsi_napadalci.Add(new Napadalec(80, 1, new Point(-150, 2 * 64 + 32), new Point(1, 0)));
         }
 
         public List<Napadalec> VsiNapadalci

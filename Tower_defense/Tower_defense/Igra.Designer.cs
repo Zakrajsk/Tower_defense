@@ -41,11 +41,15 @@ namespace Tower_defense
             this.lbl_denar = new System.Windows.Forms.Label();
             this.picbox_igralna_plosca = new System.Windows.Forms.PictureBox();
             this.picbox_napadalci = new System.Windows.Forms.PictureBox();
+            this.pnl_izgubil = new System.Windows.Forms.Panel();
+            this.btn_izg_zapri = new System.Windows.Forms.Button();
+            this.lbl_izgubil_si = new System.Windows.Forms.Label();
             this.pnl_lastnosti_izbranega.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_zivljenje)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_igralna_plosca)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_napadalci)).BeginInit();
+            this.pnl_izgubil.SuspendLayout();
             this.SuspendLayout();
             // 
             // casovnik
@@ -142,7 +146,7 @@ namespace Tower_defense
             // 
             this.picbox_napadalci.BackColor = System.Drawing.Color.Transparent;
             this.picbox_napadalci.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.picbox_napadalci.Location = new System.Drawing.Point(0, 2);
+            this.picbox_napadalci.Location = new System.Drawing.Point(2, -3);
             this.picbox_napadalci.Name = "picbox_napadalci";
             this.picbox_napadalci.Size = new System.Drawing.Size(1024, 768);
             this.picbox_napadalci.TabIndex = 11;
@@ -151,10 +155,45 @@ namespace Tower_defense
             this.picbox_napadalci.Paint += new System.Windows.Forms.PaintEventHandler(this.NarisiDinamicneObjekte);
             this.picbox_napadalci.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PremikPoPlosci);
             // 
+            // pnl_izgubil
+            // 
+            this.pnl_izgubil.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnl_izgubil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.pnl_izgubil.Controls.Add(this.btn_izg_zapri);
+            this.pnl_izgubil.Controls.Add(this.lbl_izgubil_si);
+            this.pnl_izgubil.Enabled = false;
+            this.pnl_izgubil.Location = new System.Drawing.Point(312, 259);
+            this.pnl_izgubil.Name = "pnl_izgubil";
+            this.pnl_izgubil.Size = new System.Drawing.Size(560, 265);
+            this.pnl_izgubil.TabIndex = 12;
+            this.pnl_izgubil.Visible = false;
+            // 
+            // btn_izg_zapri
+            // 
+            this.btn_izg_zapri.Location = new System.Drawing.Point(205, 161);
+            this.btn_izg_zapri.Name = "btn_izg_zapri";
+            this.btn_izg_zapri.Size = new System.Drawing.Size(152, 60);
+            this.btn_izg_zapri.TabIndex = 1;
+            this.btn_izg_zapri.Text = "Zapri";
+            this.btn_izg_zapri.UseVisualStyleBackColor = true;
+            // 
+            // lbl_izgubil_si
+            // 
+            this.lbl_izgubil_si.AutoSize = true;
+            this.lbl_izgubil_si.Font = new System.Drawing.Font("Segoe UI", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_izgubil_si.Location = new System.Drawing.Point(161, 26);
+            this.lbl_izgubil_si.Name = "lbl_izgubil_si";
+            this.lbl_izgubil_si.Size = new System.Drawing.Size(244, 62);
+            this.lbl_izgubil_si.TabIndex = 0;
+            this.lbl_izgubil_si.Text = "IZGUBIL SI";
+            // 
             // Igra
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1280, 800);
+            this.Controls.Add(this.pnl_izgubil);
             this.Controls.Add(this.picbox_napadalci);
             this.Controls.Add(this.picbox_igralna_plosca);
             this.Controls.Add(this.lbl_denar);
@@ -175,6 +214,8 @@ namespace Tower_defense
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_igralna_plosca)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_napadalci)).EndInit();
+            this.pnl_izgubil.ResumeLayout(false);
+            this.pnl_izgubil.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -192,5 +233,8 @@ namespace Tower_defense
         private System.Windows.Forms.PictureBox picbox_igralna_plosca;
         private System.Windows.Forms.Label lbl_test;
         private System.Windows.Forms.PictureBox picbox_napadalci;
+        private System.Windows.Forms.Panel pnl_izgubil;
+        private System.Windows.Forms.Label lbl_izgubil_si;
+        private System.Windows.Forms.Button btn_izg_zapri;
     }
 }

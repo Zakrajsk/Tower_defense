@@ -108,6 +108,14 @@ namespace Tower_defense
         public void IzgubljenaZivljenja(int koliko)
         {
             this.st_zivljenj -= koliko;
+            if (this.st_zivljenj <= 0)
+            {
+                pnl_izgubil.Enabled = true;
+                pnl_izgubil.Visible = true;
+                //Da uporabnik ne more klikniti nove runde
+                casovnik.Enabled = false;
+                btn_nova_runda.Enabled = false;
+            }
         }
 
         /// <summary>
@@ -268,7 +276,6 @@ namespace Tower_defense
             Button izbran = (Button)sender;
 
             this.izbran_top = int.Parse(izbran.Name.Split("_")[2]); //ime gumba btn_meni_{stevilka}
-            lbl_test.Text = this.izbran_top.ToString();
         }
 
         /// <summary>
@@ -390,6 +397,10 @@ namespace Tower_defense
         private void ZacetekNoveRunde(object sender, EventArgs e)
         {
             casovnik.Enabled = !casovnik.Enabled;
+            if (!casovnik.Enabled)
+            {
+                btn_nova_runda.Text = "Začni";
+            }
         }
 
         /// <summary>
@@ -416,7 +427,6 @@ namespace Tower_defense
         /// <param name="e"></param>
         private void NarisiDinamicneObjekte(object sender, PaintEventArgs e)
         {
-            lbl_test.Text = this.napadalci.VsiNapadalci[0].Lokacija.ToString();
             IzrisiNapadalce(e.Graphics);
             IzrisiIzstrelke(e.Graphics);
             
@@ -436,21 +446,34 @@ namespace Tower_defense
 
             if (this.izbran_top != -1) //uporabnik ima izbran top za postavitev
             {
-                IzrisiIzbranTop(e.Graphics);
+                if (!stolpi.AliJeZasedeno(this.kje_miska))
+                {
+                    IzrisiIzbranTop(e.Graphics);
+                }
             }
         }
 
+        /// <summary>
+        /// Ko uporabnik klikne na plosco preveri če ima izbran top in ga v tem primeru postavi
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickNaPlosco(object sender, EventArgs e)
         {
             if (this.izbran_top != -1) //Uporabnik zeli postaviti top na polje
             {
-                lbl_test.Text = this.kje_miska.ToString();
-                stolpi.PostavitevNovega(this.kje_miska, this.izbira_topov[this.izbran_top], this.izbran_top);
-                this.st_kovancev -= this.izbira_topov[this.izbran_top].Cena;
-                this.izbran_top = -1;
-                picbox_igralna_plosca.Invalidate();
-                this.PosodobiZivljenjaKovance();
-                this.NapolniMeni();
+                //Pogledamo, ali je uporabnik kliknil na zasedeno mesto
+                if (!stolpi.AliJeZasedeno(this.kje_miska))
+                {
+                    stolpi.PostavitevNovega(this.kje_miska, this.izbira_topov[this.izbran_top], this.izbran_top);
+                    //Odstejemo denar kolikor je stal top
+                    this.st_kovancev -= this.izbira_topov[this.izbran_top].Cena;
+                    this.izbran_top = -1;
+                    picbox_igralna_plosca.Invalidate();
+                    this.PosodobiZivljenjaKovance();
+                    this.NapolniMeni();
+
+                }
             }
         }
     }

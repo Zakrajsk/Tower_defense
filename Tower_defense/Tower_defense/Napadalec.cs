@@ -51,9 +51,20 @@ namespace Tower_defense
             }
         }
 
-        public void Ustreljen(int moc)
+        /// <summary>
+        /// Napadalcu zmanjsa zivljenja za toliko kakor je bil mocan strel. Prav tako vrne true, če je napadalec mrtev
+        /// </summary>
+        /// <param name="moc"></param>
+        /// <returns>true ce je mrtev, false drugace</returns>
+        public bool Ustreljen(int moc)
         {
             this.zivljenje -= moc;
+            if (this.zivljenje <= 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

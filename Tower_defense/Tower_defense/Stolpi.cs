@@ -22,11 +22,34 @@ namespace Tower_defense
             get { return this.vsi_stolpi; }
         }
 
+        /// <summary>
+        /// Postavi nov stolp na izbrano lokacijo
+        /// </summary>
+        /// <param name="lokacija"></param>
+        /// <param name="izbran"></param>
+        /// <param name="tip"></param>
         public void PostavitevNovega(Point lokacija, Stolp izbran, int tip)
         {
             // Nastavimo nov stolp ki ima se lokacijo
             Stolp postavljen = new Stolp(tip, izbran.Radij, izbran.Moc, izbran.Hitrost, lokacija, izbran.Cena);
             this.vsi_stolpi.Add(postavljen);
+        }
+
+        /// <summary>
+        /// Vrne true ali false, ce je lokacija prazna in lahko tja postavimo stolp
+        /// </summary>
+        /// <param name="lokacija"></param>
+        /// <returns></returns>
+        public bool AliJeZasedeno(Point lokacija)
+        {
+            foreach(Stolp posamezn in this.vsi_stolpi)
+            {
+                if (posamezn.Lokacija == lokacija)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -79,11 +102,17 @@ namespace Tower_defense
                     {
                         //imamo napadalca, ki ga lahko ustrelimo
                         posamezni.Izstelitev();
-                        najblizji_napadalec.Ustreljen(posamezni.Moc);
+                        bool ali_mrtev = najblizji_napadalec.Ustreljen(posamezni.Moc);
                         List<Point> strel = new List<Point>();
                         strel.Add(realna_lokacija);
                         strel.Add(najblizji_napadalec.Lokacija);
                         izstelki_za_izris.Add(strel);
+
+                        if (ali_mrtev)
+                        {
+                            //Napadalec je mrtev, zato ga odstranimo
+                            vsi_napadalci.Remove(najblizji_napadalec);
+                        }
                     }
                 }
                 else
