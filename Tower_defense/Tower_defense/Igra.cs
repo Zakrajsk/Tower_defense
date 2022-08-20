@@ -476,5 +476,16 @@ namespace Tower_defense
                 }
             }
         }
+
+        /// <summary>
+        /// Ko uporabnik klikne ta gumb zapre trenutno okno in ga pošlje nazaj na glavni meni
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IzgubilZapri(object sender, EventArgs e)
+        {
+            Igra.ActiveForm.Close();
+            Osnovna.ActiveForm.Focus();
+        }
     }
 }

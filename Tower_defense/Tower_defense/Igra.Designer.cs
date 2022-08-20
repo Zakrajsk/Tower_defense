@@ -178,6 +178,7 @@ namespace Tower_defense
             this.btn_izg_zapri.TabIndex = 1;
             this.btn_izg_zapri.Text = "Zapri";
             this.btn_izg_zapri.UseVisualStyleBackColor = true;
+            this.btn_izg_zapri.Click += new System.EventHandler(this.IzgubilZapri);
             // 
             // lbl_izgubil_si
             // 

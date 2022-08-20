@@ -13,7 +13,7 @@ namespace Tower_defense
 
         public Stolpi()
         {
-            this.vsi_stolpi.Add(new Stolp(0, 300, 1, 50, new Point(7, 4), 10));
+            //this.vsi_stolpi.Add(new Stolp(0, 300, 1, 50, new Point(7, 4), 10));
             //this.vsi_stolpi.Add(new Stolp(400, 4, 80, new Point(9, 3)));
         }
 
