@@ -33,7 +33,6 @@ namespace Tower_defense
         private int izbran_top = -1;  //Spremenljivka za izbiro topa ce je -1 ni izbran noben drugače pa top z to stevilko
         private Stolp[] izbira_topov = new Stolp[2];
         private Image[] slike_topov = new Image[2];
-        private Image slika_napake = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\napaka.png");
 
         private Point kje_miska = new Point(0, 0);
 
@@ -45,7 +44,6 @@ namespace Tower_defense
             InitializeComponent();
             this.slike_topov[0] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
             this.slike_topov[1] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\top_0.png");
-            //this.slike_topov[2] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
 
             this.izbira_topov[0] = new Stolp(0, 100, 1, 50, new Point(0, 0), 10);
             this.izbira_topov[1] = new Stolp(1, 300, 1, 100, new Point(0, 0), 30);
@@ -127,7 +125,10 @@ namespace Tower_defense
             lbl_denar.Text = this.StKovancev.ToString();
         }
 
-
+        /// <summary>
+        /// Izrise celotno mrezo z potjo
+        /// </summary>
+        /// <param name="g"></param>
         public void IzrisiMrezo(Graphics g)
         {
             int st_vrstic = 12;
@@ -416,6 +417,8 @@ namespace Tower_defense
 
             this.izstrelki = this.stolpi.IzstreliVse(this.napadalci.VsiNapadalci, this.vel_mreze);
             picbox_napadalci.Invalidate();
+
+            lbl_test.Text = this.napadalci.VsiNapadalci.Count.ToString();
 
         }
 

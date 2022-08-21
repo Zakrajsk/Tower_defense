@@ -25,6 +25,10 @@ namespace Tower_defense
         public List<Napadalec> VsiNapadalci
         {
             get { return this.vsi_napadalci; }
+            set
+            {
+                this.vsi_napadalci = value;
+            }
         }
 
         /// <summary>
@@ -37,11 +41,11 @@ namespace Tower_defense
         public int PremakniVse(List<Point> pot, Size vel_mreze)
         {
             int izgubljenih_zivljenj = 0;
+            List<Napadalec> umrli = new List<Napadalec>();
 
             foreach(Napadalec posamezni in vsi_napadalci)
             {
                 //Ko pride v sredino kvadranta
-                //HITROST BOS MOGU SPREMENIT; CE BO PODANA V procentih pikslov
                 if (posamezni.Lokacija.X % (vel_mreze.Width / 2) < posamezni.Hitrost && posamezni.Lokacija.Y % (vel_mreze.Height / 2) < posamezni.Hitrost
                                             && posamezni.Lokacija.X / (vel_mreze.Width / 2) % 2 == 1 
                                             && posamezni.Lokacija.Y / (vel_mreze.Height / 2) % 2 == 1)
@@ -64,15 +68,19 @@ namespace Tower_defense
                         {
                             //napadalec je na koncu, zato ga odstranimo in odstejemo zivljenja
                             izgubljenih_zivljenj += posamezni.Zivljenje;
-
-                            //TODO Odstrani napadalca
+                            //Dodamo v seznam umrlih, ki jih bomo na koncu premika izbrisali iz seznama vseh napadalcev
+                            umrli.Add(posamezni);
                         }
 
                     }
                 }
                 posamezni.Premik();
             }
-
+            //izbrisemo vse, ki so  te rundi umrli
+            foreach (Napadalec en_umrl in umrli)
+            {
+                this.VsiNapadalci.Remove(en_umrl);
+            }
             return izgubljenih_zivljenj;
         }
     }
