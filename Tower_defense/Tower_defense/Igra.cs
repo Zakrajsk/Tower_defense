@@ -40,48 +40,23 @@ namespace Tower_defense
         private int st_zivljenj = 100;
         private int st_kovancev = 100;
 
+        private int[] polje_x = { 0, 1, 2, 2, 3, 4, 5, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 7, 6, 5, 5, 5, 6, 7, 8, 9, 10, 10, 11, 12, 12, 12, 12, 13, 14, 15, 16 };
+        private int[] polje_y = { 2, 2, 2, 3, 3, 3, 3, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6, 6, 6, 6, 7, 8, 8, 8, 8, 8, 8, 7, 7, 7, 6, 5, 4, 4, 4, 4, 4 };
+
         public Igra()
         {
             InitializeComponent();
-            this.slike_topov[0] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\osnovn_krog.png");
-            this.slike_topov[1] = Image.FromFile(@"E:\Projects\Tower_defense\Tower_defense\Tower_defense\Slike\top_0.png");
+            this.slike_topov[0] = Image.FromFile(@"..\..\..\Slike\osnovn_krog.png");
+            this.slike_topov[1] = Image.FromFile(@"..\..\..\Slike\top_0.png");
+
 
             this.izbira_topov[0] = new Stolp(0, 100, 1, 50, new Point(0, 0), 10);
             this.izbira_topov[1] = new Stolp(1, 300, 1, 100, new Point(0, 0), 30);
 
-            this.testno_polje.Add(new Point(0, 2));
-            this.testno_polje.Add(new Point(1, 2));
-            this.testno_polje.Add(new Point(2, 2));
-            this.testno_polje.Add(new Point(2, 3));
-            this.testno_polje.Add(new Point(3, 3));
-            this.testno_polje.Add(new Point(4, 3));
-            this.testno_polje.Add(new Point(5, 3));
-            this.testno_polje.Add(new Point(6, 3));
-            this.testno_polje.Add(new Point(7, 3));
-            this.testno_polje.Add(new Point(8, 3));
-            this.testno_polje.Add(new Point(8, 4));
-            this.testno_polje.Add(new Point(8, 5));
-            this.testno_polje.Add(new Point(8, 6));
-            this.testno_polje.Add(new Point(7, 6));
-            this.testno_polje.Add(new Point(6, 6));
-            this.testno_polje.Add(new Point(5, 6));
-            this.testno_polje.Add(new Point(5, 7));
-            this.testno_polje.Add(new Point(5, 8));
-            this.testno_polje.Add(new Point(6, 8));
-            this.testno_polje.Add(new Point(7, 8));
-            this.testno_polje.Add(new Point(8, 8));
-            this.testno_polje.Add(new Point(9, 8));
-            this.testno_polje.Add(new Point(10, 8));
-            this.testno_polje.Add(new Point(10, 7));
-            this.testno_polje.Add(new Point(11, 7));
-            this.testno_polje.Add(new Point(12, 7));
-            this.testno_polje.Add(new Point(12, 6));
-            this.testno_polje.Add(new Point(12, 5));
-            this.testno_polje.Add(new Point(12, 4));
-            this.testno_polje.Add(new Point(13, 4));
-            this.testno_polje.Add(new Point(14, 4));
-            this.testno_polje.Add(new Point(15, 4));
-            this.testno_polje.Add(new Point(16, 4));
+            for (int i = 0; i < this.polje_x.Length; i++)
+            {
+                this.testno_polje.Add(new Point(this.polje_x[i], this.polje_y[i]));
+            }
 
             picbox_igralna_plosca.Controls.Add(picbox_napadalci); //Zato, da je drugi picturebox transparenten
 
@@ -99,6 +74,7 @@ namespace Tower_defense
             get { return this.st_kovancev; }
 
         }
+
 
         /// <summary>
         /// Ko napadalec pride do konca igralec zgubi zivljenja
@@ -414,6 +390,10 @@ namespace Tower_defense
         /// </summary>
         private void KonecRunde()
         {
+
+            //za vsako koncano rundo neka nagrada kovancev
+            this.st_kovancev += this.runda;
+            PosodobiZivljenjaKovance();
 
             this.runda++;
             casovnik.Enabled = false;

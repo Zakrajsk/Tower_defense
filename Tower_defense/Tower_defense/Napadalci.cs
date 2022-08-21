@@ -101,9 +101,17 @@ namespace Tower_defense
 
             if (stopnja % 2 == 0)
             {
-                for (int i = 0; i < stopnja; i++)
+                for (int i = 0; i < stopnja / 2; i++)
                 {
                     this.VsiNapadalci.Add(new Napadalec(2, 2, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                }
+            }
+
+            if (stopnja % 5 == 0)
+            {
+                for (int i = 0; i < stopnja / 2; i++)
+                {
+                    this.VsiNapadalci.Add(new Napadalec(3, 2, new Point((-60) * i, 2 * 64 + 32), new Point(1, 0)));
                 }
             }
         }
