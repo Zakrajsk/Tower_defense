@@ -33,7 +33,7 @@ namespace Tower_defense
             this.casovnik = new System.Windows.Forms.Timer(this.components);
             this.pnl_izbirni_meni = new System.Windows.Forms.Panel();
             this.pnl_lastnosti_izbranega = new System.Windows.Forms.Panel();
-            this.lbl_test = new System.Windows.Forms.Label();
+            this.lbl_podatki = new System.Windows.Forms.Label();
             this.btn_nova_runda = new System.Windows.Forms.Button();
             this.lbl_zivljenja = new System.Windows.Forms.Label();
             this.picbox_zivljenje = new System.Windows.Forms.PictureBox();
@@ -68,28 +68,29 @@ namespace Tower_defense
             // pnl_lastnosti_izbranega
             // 
             this.pnl_lastnosti_izbranega.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.pnl_lastnosti_izbranega.Controls.Add(this.lbl_test);
+            this.pnl_lastnosti_izbranega.Controls.Add(this.lbl_podatki);
             this.pnl_lastnosti_izbranega.Location = new System.Drawing.Point(1056, 512);
             this.pnl_lastnosti_izbranega.Name = "pnl_lastnosti_izbranega";
             this.pnl_lastnosti_izbranega.Size = new System.Drawing.Size(208, 160);
             this.pnl_lastnosti_izbranega.TabIndex = 4;
             // 
-            // lbl_test
+            // lbl_podatki
             // 
-            this.lbl_test.AutoSize = true;
-            this.lbl_test.Location = new System.Drawing.Point(16, 16);
-            this.lbl_test.Name = "lbl_test";
-            this.lbl_test.Size = new System.Drawing.Size(33, 20);
-            this.lbl_test.TabIndex = 0;
-            this.lbl_test.Text = "test";
+            this.lbl_podatki.AutoSize = true;
+            this.lbl_podatki.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_podatki.Location = new System.Drawing.Point(16, 16);
+            this.lbl_podatki.Name = "lbl_podatki";
+            this.lbl_podatki.Size = new System.Drawing.Size(0, 31);
+            this.lbl_podatki.TabIndex = 0;
             // 
             // btn_nova_runda
             // 
+            this.btn_nova_runda.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_nova_runda.Location = new System.Drawing.Point(1056, 688);
             this.btn_nova_runda.Name = "btn_nova_runda";
             this.btn_nova_runda.Size = new System.Drawing.Size(208, 96);
             this.btn_nova_runda.TabIndex = 5;
-            this.btn_nova_runda.Text = "Start";
+            this.btn_nova_runda.Text = "Začni stopnjo 1";
             this.btn_nova_runda.UseVisualStyleBackColor = true;
             this.btn_nova_runda.Click += new System.EventHandler(this.ZacetekNoveRunde);
             // 
@@ -232,7 +233,7 @@ namespace Tower_defense
         private System.Windows.Forms.PictureBox picbox_denar;
         private System.Windows.Forms.Label lbl_denar;
         private System.Windows.Forms.PictureBox picbox_igralna_plosca;
-        private System.Windows.Forms.Label lbl_test;
+        private System.Windows.Forms.Label lbl_podatki;
         private System.Windows.Forms.PictureBox picbox_napadalci;
         private System.Windows.Forms.Panel pnl_izgubil;
         private System.Windows.Forms.Label lbl_izgubil_si;

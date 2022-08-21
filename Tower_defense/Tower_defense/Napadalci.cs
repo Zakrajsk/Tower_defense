@@ -16,10 +16,7 @@ namespace Tower_defense
 
         public Napadalci()
         {
-            this.vsi_napadalci.Add(new Napadalec(4, 2, new Point(0, 2 * 64 + 32), new Point(1, 0)));
-            this.vsi_napadalci.Add(new Napadalec(30, 1, new Point(-50, 2 * 64 + 32), new Point(1, 0)));
-            this.vsi_napadalci.Add(new Napadalec(40, 3, new Point(-100, 2 * 64 + 32), new Point(1, 0)));
-            this.vsi_napadalci.Add(new Napadalec(80, 1, new Point(-150, 2 * 64 + 32), new Point(1, 0)));
+
         }
 
         public List<Napadalec> VsiNapadalci
@@ -82,6 +79,33 @@ namespace Tower_defense
                 this.VsiNapadalci.Remove(en_umrl);
             }
             return izgubljenih_zivljenj;
+        }
+
+        /// <summary>
+        /// Generira napadalce glede na stopnjo
+        /// </summary>
+        /// <param name="stopnja"></param>
+        public void GenerirajNapadalce(int stopnja)
+        {
+            //Spraznemo, ce slucajno se kaj ostane (ne bi smelo do tega priti ampak vseeno)
+            this.VsiNapadalci.Clear();
+
+            if (stopnja % 2 != 0)
+            {
+                for (int i = 0; i < stopnja; i++)
+                {
+                    this.VsiNapadalci.Add(new Napadalec(1, 1, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                }
+            }
+
+
+            if (stopnja % 2 == 0)
+            {
+                for (int i = 0; i < stopnja; i++)
+                {
+                    this.VsiNapadalci.Add(new Napadalec(2, 2, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                }
+            }
         }
     }
 }

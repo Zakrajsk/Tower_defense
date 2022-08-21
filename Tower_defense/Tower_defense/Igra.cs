@@ -36,6 +36,7 @@ namespace Tower_defense
 
         private Point kje_miska = new Point(0, 0);
 
+        private int runda = 1;
         private int st_zivljenj = 100;
         private int st_kovancev = 100;
 
@@ -209,7 +210,6 @@ namespace Tower_defense
         {
             int x = kje_miska.X * this.vel_mreze.Width;
             int y = kje_miska.Y * this.vel_mreze.Height;
-            lbl_test.Text = "" + x + " "+ y;
 
             g.DrawImage(this.slike_topov[this.izbran_top], x, y, this.vel_mreze.Width, this.vel_mreze.Height);
 
@@ -277,6 +277,9 @@ namespace Tower_defense
             Button izbran = (Button)sender;
 
             this.izbran_top = int.Parse(izbran.Name.Split("_")[2]); //ime gumba btn_meni_{stevilka}
+            Stolp stolp_podatki = this.izbira_topov[this.izbran_top];
+            string podatki = $"Moc: {stolp_podatki.Moc}\nHitrost: {stolp_podatki.Hitrost}\nCena: {stolp_podatki.Cena}";
+            lbl_podatki.Text = podatki;
         }
 
         /// <summary>
@@ -386,6 +389,7 @@ namespace Tower_defense
             if(e.KeyChar == '\x1b') //Pritisnjena esc tipka
             {
                 this.izbran_top = -1; //ponastavimo izbran top
+                lbl_podatki.Text = "";
                 picbox_igralna_plosca.Invalidate();
             }
         }
@@ -397,11 +401,28 @@ namespace Tower_defense
         /// <param name="e"></param>
         private void ZacetekNoveRunde(object sender, EventArgs e)
         {
-            casovnik.Enabled = !casovnik.Enabled;
-            if (!casovnik.Enabled)
-            {
-                btn_nova_runda.Text = "Začni";
-            }
+            //generiramo nove napadalce za naslednjo rundo
+            this.napadalci.GenerirajNapadalce(this.runda);
+
+            casovnik.Enabled = true;
+            btn_nova_runda.Enabled = false;
+            btn_nova_runda.Text = "V teku stopnja: " + this.runda;
+        }
+
+        /// <summary>
+        /// Ko vsi napadalci umrejo, se runda konca in nastavi na naslednjo
+        /// </summary>
+        private void KonecRunde()
+        {
+
+            this.runda++;
+            casovnik.Enabled = false;
+            btn_nova_runda.Enabled = true;
+            btn_nova_runda.Text = "Začni stopnjo: " + this.runda;
+
+            //da pobrisemo se izstrelke in vse
+            this.izstrelki.Clear();
+            picbox_napadalci.Invalidate();
         }
 
         /// <summary>
@@ -418,7 +439,14 @@ namespace Tower_defense
             this.izstrelki = this.stolpi.IzstreliVse(this.napadalci.VsiNapadalci, this.vel_mreze);
             picbox_napadalci.Invalidate();
 
-            lbl_test.Text = this.napadalci.VsiNapadalci.Count.ToString();
+            if (this.napadalci.VsiNapadalci.Count == 0)
+            {
+                
+                //Vsi napadalci so mrtvi, zato se runda konca
+                this.KonecRunde();
+            }
+
+            
 
         }
 
@@ -472,6 +500,7 @@ namespace Tower_defense
                     //Odstejemo denar kolikor je stal top
                     this.st_kovancev -= this.izbira_topov[this.izbran_top].Cena;
                     this.izbran_top = -1;
+                    lbl_podatki.Text = "";
                     picbox_igralna_plosca.Invalidate();
                     this.PosodobiZivljenjaKovance();
                     this.NapolniMeni();
