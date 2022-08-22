@@ -90,29 +90,74 @@ namespace Tower_defense
             //Spraznemo, ce slucajno se kaj ostane (ne bi smelo do tega priti ampak vseeno)
             this.VsiNapadalci.Clear();
 
-            if (stopnja % 2 != 0)
+            if (stopnja <= 10) //Prvih 10 lahkih
+            {
+                if (stopnja % 2 != 0)
+                {
+                    for (int i = 0; i < stopnja; i++)
+                    {
+                        this.VsiNapadalci.Add(new Napadalec(1, 1, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                    }
+                }
+
+
+                if (stopnja % 2 == 0)
+                {
+                    for (int i = 0; i < stopnja / 2; i++)
+                    {
+                        this.VsiNapadalci.Add(new Napadalec(2, 2, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                    }
+                }
+
+                if (stopnja % 5 == 0)
+                {
+                    for (int i = 0; i < stopnja / 2; i++)
+                    {
+                        this.VsiNapadalci.Add(new Napadalec(3, 2, new Point((-60) * i, 2 * 64 + 32), new Point(1, 0)));
+                    }
+                }
+
+            }
+            else
             {
                 for (int i = 0; i < stopnja; i++)
                 {
-                    this.VsiNapadalci.Add(new Napadalec(1, 1, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                    this.VsiNapadalci.Add(new Napadalec(3, 3, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
                 }
-            }
 
-
-            if (stopnja % 2 == 0)
-            {
-                for (int i = 0; i < stopnja / 2; i++)
+                if (stopnja % 2 != 0)
                 {
-                    this.VsiNapadalci.Add(new Napadalec(2, 2, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                    for (int i = 0; i < stopnja; i++)
+                    {
+                        this.VsiNapadalci.Add(new Napadalec(4, 2, new Point(-160 + (-80) * i, 2 * 64 + 32), new Point(1, 0)));
+                    }
                 }
-            }
 
-            if (stopnja % 5 == 0)
-            {
-                for (int i = 0; i < stopnja / 2; i++)
+                if (stopnja % 2 == 0)
                 {
-                    this.VsiNapadalci.Add(new Napadalec(3, 2, new Point((-60) * i, 2 * 64 + 32), new Point(1, 0)));
+                    for (int i = 0; i < stopnja / 3; i++)
+                    {
+                        this.VsiNapadalci.Add(new Napadalec(6, 1, new Point(-160 + (-80) * i, 2 * 64 + 32), new Point(1, 0)));
+                    }
                 }
+
+                if (stopnja % 10 == 0)
+                {
+                    for (int i = 0; i < stopnja / 10; i++)
+                    {
+                        this.VsiNapadalci.Add(new Napadalec(20, 1, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                    }
+                }
+
+                if (stopnja % 50 == 0)
+                {
+                    for (int i = 0; i < stopnja / 10; i++)
+                    {
+                        this.VsiNapadalci.Add(new Napadalec(50, 1, new Point((-40) * i, 2 * 64 + 32), new Point(1, 0)));
+                    }
+                }
+
+
             }
         }
     }

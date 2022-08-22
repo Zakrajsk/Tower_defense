@@ -44,6 +44,7 @@ namespace Tower_defense
             this.pnl_izgubil = new System.Windows.Forms.Panel();
             this.btn_izg_zapri = new System.Windows.Forms.Button();
             this.lbl_izgubil_si = new System.Windows.Forms.Label();
+            this.lbl_izgubil_runda = new System.Windows.Forms.Label();
             this.pnl_lastnosti_izbranega.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_zivljenje)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).BeginInit();
@@ -162,6 +163,7 @@ namespace Tower_defense
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_izgubil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.pnl_izgubil.Controls.Add(this.lbl_izgubil_runda);
             this.pnl_izgubil.Controls.Add(this.btn_izg_zapri);
             this.pnl_izgubil.Controls.Add(this.lbl_izgubil_si);
             this.pnl_izgubil.Enabled = false;
@@ -190,6 +192,16 @@ namespace Tower_defense
             this.lbl_izgubil_si.Size = new System.Drawing.Size(244, 62);
             this.lbl_izgubil_si.TabIndex = 0;
             this.lbl_izgubil_si.Text = "IZGUBIL SI";
+            // 
+            // lbl_izgubil_runda
+            // 
+            this.lbl_izgubil_runda.AutoSize = true;
+            this.lbl_izgubil_runda.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_izgubil_runda.Location = new System.Drawing.Point(197, 98);
+            this.lbl_izgubil_runda.Name = "lbl_izgubil_runda";
+            this.lbl_izgubil_runda.Size = new System.Drawing.Size(167, 46);
+            this.lbl_izgubil_runda.TabIndex = 2;
+            this.lbl_izgubil_runda.Text = "Stopnja: 5";
             // 
             // Igra
             // 
@@ -238,5 +250,6 @@ namespace Tower_defense
         private System.Windows.Forms.Panel pnl_izgubil;
         private System.Windows.Forms.Label lbl_izgubil_si;
         private System.Windows.Forms.Button btn_izg_zapri;
+        private System.Windows.Forms.Label lbl_izgubil_runda;
     }
 }

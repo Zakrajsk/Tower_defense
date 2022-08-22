@@ -87,8 +87,9 @@ namespace Tower_defense
         public void IzgubljenaZivljenja(int koliko)
         {
             this.st_zivljenj -= koliko;
-            if (this.st_zivljenj <= 0)
+            if (this.st_zivljenj <= 0) //Igralec je izgubil
             {
+                lbl_izgubil_runda.Text = "Stopnja: " + this.runda;
                 pnl_izgubil.Enabled = true;
                 pnl_izgubil.Visible = true;
                 //Da uporabnik ne more klikniti nove runde
@@ -398,6 +399,7 @@ namespace Tower_defense
             //za vsako koncano rundo neka nagrada kovancev
             this.st_kovancev += this.runda;
             PosodobiZivljenjaKovance();
+            NapolniMeni();
 
             this.runda++;
             casovnik.Enabled = false;
@@ -461,7 +463,7 @@ namespace Tower_defense
 
             if (this.izbran_top != -1) //uporabnik ima izbran top za postavitev
             {
-                if (!stolpi.AliJeZasedeno(this.kje_miska))
+                if (!stolpi.AliJeZasedeno(this.kje_miska) && this.testno_polje.Contains(this.kje_miska))
                 {
                     IzrisiIzbranTop(e.Graphics);
                 }
@@ -501,7 +503,6 @@ namespace Tower_defense
         private void IzgubilZapri(object sender, EventArgs e)
         {
             Igra.ActiveForm.Close();
-            Osnovna.ActiveForm.Focus();
         }
     }
 }
