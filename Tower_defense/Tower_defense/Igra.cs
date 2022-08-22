@@ -31,8 +31,8 @@ namespace Tower_defense
         private List<Point> testno_polje = new List<Point>();
 
         private int izbran_top = -1;  //Spremenljivka za izbiro topa ce je -1 ni izbran noben drugače pa top z to stevilko
-        private Stolp[] izbira_topov = new Stolp[4];
-        private Image[] slike_topov = new Image[4];
+        private Stolp[] izbira_topov = new Stolp[5];
+        private Image[] slike_topov = new Image[5];
 
         private Point kje_miska = new Point(0, 0);
 
@@ -50,12 +50,14 @@ namespace Tower_defense
             this.slike_topov[1] = Image.FromFile(@"..\..\..\Slike\top_sniper.png");
             this.slike_topov[2] = Image.FromFile(@"..\..\..\Slike\top_mocen.png");
             this.slike_topov[3] = Image.FromFile(@"..\..\..\Slike\top_mitraljez.png");
+            this.slike_topov[4] = Image.FromFile(@"..\..\..\Slike\top_hud_sniper.png");
 
 
             this.izbira_topov[0] = new Stolp(0, 100, 1, 50, new Point(0, 0), 10);
             this.izbira_topov[1] = new Stolp(1, 300, 1, 100, new Point(0, 0), 30);
             this.izbira_topov[2] = new Stolp(2, 100, 3, 100, new Point(0, 0), 30);
-            this.izbira_topov[3] = new Stolp(2, 100, 1, 10, new Point(0, 0), 100);
+            this.izbira_topov[3] = new Stolp(3, 100, 1, 10, new Point(0, 0), 100);
+            this.izbira_topov[4] = new Stolp(4, 1000, 2, 200, new Point(0, 0), 50);
 
             for (int i = 0; i < this.polje_x.Length; i++)
             {
@@ -463,7 +465,7 @@ namespace Tower_defense
 
             if (this.izbran_top != -1) //uporabnik ima izbran top za postavitev
             {
-                if (!stolpi.AliJeZasedeno(this.kje_miska) && this.testno_polje.Contains(this.kje_miska))
+                if (!stolpi.AliJeZasedeno(this.kje_miska) && !this.testno_polje.Contains(this.kje_miska))
                 {
                     IzrisiIzbranTop(e.Graphics);
                 }
