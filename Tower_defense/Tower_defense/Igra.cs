@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tower_defense
@@ -482,7 +477,7 @@ namespace Tower_defense
             if (this.izbran_top != -1) //Uporabnik zeli postaviti top na polje
             {
                 //Pogledamo, ali je uporabnik kliknil na zasedeno mesto
-                if (!stolpi.AliJeZasedeno(this.kje_miska))
+                if (!stolpi.AliJeZasedeno(this.kje_miska) && !this.testno_polje.Contains(this.kje_miska))
                 {
                     stolpi.PostavitevNovega(this.kje_miska, this.izbira_topov[this.izbran_top], this.izbran_top);
                     //Odstejemo denar kolikor je stal top
