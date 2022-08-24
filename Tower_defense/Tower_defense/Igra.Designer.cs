@@ -42,9 +42,9 @@ namespace Tower_defense
             this.picbox_igralna_plosca = new System.Windows.Forms.PictureBox();
             this.picbox_napadalci = new System.Windows.Forms.PictureBox();
             this.pnl_izgubil = new System.Windows.Forms.Panel();
+            this.lbl_izgubil_runda = new System.Windows.Forms.Label();
             this.btn_izg_zapri = new System.Windows.Forms.Button();
             this.lbl_izgubil_si = new System.Windows.Forms.Label();
-            this.lbl_izgubil_runda = new System.Windows.Forms.Label();
             this.pnl_lastnosti_izbranega.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_zivljenje)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_denar)).BeginInit();
@@ -173,6 +173,16 @@ namespace Tower_defense
             this.pnl_izgubil.TabIndex = 12;
             this.pnl_izgubil.Visible = false;
             // 
+            // lbl_izgubil_runda
+            // 
+            this.lbl_izgubil_runda.AutoSize = true;
+            this.lbl_izgubil_runda.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_izgubil_runda.Location = new System.Drawing.Point(197, 98);
+            this.lbl_izgubil_runda.Name = "lbl_izgubil_runda";
+            this.lbl_izgubil_runda.Size = new System.Drawing.Size(164, 45);
+            this.lbl_izgubil_runda.TabIndex = 2;
+            this.lbl_izgubil_runda.Text = "Stopnja: 5";
+            // 
             // btn_izg_zapri
             // 
             this.btn_izg_zapri.Location = new System.Drawing.Point(205, 161);
@@ -193,16 +203,6 @@ namespace Tower_defense
             this.lbl_izgubil_si.TabIndex = 0;
             this.lbl_izgubil_si.Text = "IZGUBIL SI";
             // 
-            // lbl_izgubil_runda
-            // 
-            this.lbl_izgubil_runda.AutoSize = true;
-            this.lbl_izgubil_runda.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_izgubil_runda.Location = new System.Drawing.Point(197, 98);
-            this.lbl_izgubil_runda.Name = "lbl_izgubil_runda";
-            this.lbl_izgubil_runda.Size = new System.Drawing.Size(167, 46);
-            this.lbl_izgubil_runda.TabIndex = 2;
-            this.lbl_izgubil_runda.Text = "Stopnja: 5";
-            // 
             // Igra
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -218,6 +218,7 @@ namespace Tower_defense
             this.Controls.Add(this.pnl_lastnosti_izbranega);
             this.Controls.Add(this.pnl_izbirni_meni);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.Name = "Igra";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PritisnjenaTipka);
